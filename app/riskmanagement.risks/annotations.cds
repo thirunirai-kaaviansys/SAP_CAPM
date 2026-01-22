@@ -1,4 +1,5 @@
 using RiskManagementService as service from '../../srv/service';
+ 
 annotate service.Risks with @(
     UI.FieldGroup #GeneratedGroup : {
         $Type : 'UI.FieldGroupType',
@@ -40,12 +41,12 @@ annotate service.Risks with @(
             },
             {
                 $Type : 'UI.DataField',
-                Value : supplier.BusinessPartnerFullName,
+                Value : BusinessPartnerFullName,
                 Label : 'BusinessPartnerFullName',
             },
             {
                 $Type : 'UI.DataField',
-                Value : supplier.BusinessPartnerIsBlocked,
+                Value : BusinessPartnerIsBlocked,
                 Label : 'BusinessPartnerIsBlocked',
             },
         ],
@@ -89,9 +90,15 @@ annotate service.Risks with @(
             Value : supplier_BusinessPartner,
             Label : 'supplier_BusinessPartner',
         },
+        {
+            $Type : 'UI.DataField',
+            Value : BusinessPartnerFullName,
+            Label : 'BusinessPartnerFullName',
+        },
     ],
 );
-
+ 
+// Annotation for Mitigations value help
 annotate service.Risks with {
     miti @Common.ValueList : {
         $Type : 'Common.ValueListType',
@@ -121,17 +128,28 @@ annotate service.Risks with {
         ],
     }
 };
-
+ 
+// Annotation for BusinessPartner value help with auto-fill
 annotate service.Risks with {
-    supplier @(
+    supplier_BusinessPartner @(
         Common.ValueList : {
-        $Type : 'Common.ValueListType',
-        CollectionPath : 'A_BusinessPartner',
-        Parameters : [
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'A_BusinessPartner',
+            Parameters : [
                 {
                     $Type : 'Common.ValueListParameterInOut',
                     LocalDataProperty : supplier_BusinessPartner,
                     ValueListProperty : 'BusinessPartner',
+                },
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : BusinessPartnerFullName,
+                    ValueListProperty : 'BusinessPartnerFullName',
+                },
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : BusinessPartnerIsBlocked,
+                    ValueListProperty : 'BusinessPartnerIsBlocked',
                 },
                 {
                     $Type : 'Common.ValueListParameterDisplayOnly',
@@ -141,17 +159,8 @@ annotate service.Risks with {
                     $Type : 'Common.ValueListParameterDisplayOnly',
                     ValueListProperty : 'Supplier',
                 },
-                {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'BusinessPartnerFullName',
-                },
-                {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'BusinessPartnerIsBlocked',
-                },
             ],
-    },
+        },
         Common.ValueListWithFixedValues : true,
     )
 };
-
